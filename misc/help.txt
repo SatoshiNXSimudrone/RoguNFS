@@ -1,0 +1,39 @@
+
+                        ***  HELP  ***
+   Welcome to RogueNFS,                     
+     RogueNFS is a Interactive shell that lets you fast
+     and convienent carry out Network tasks from an
+     interactive shell. Just enter your choice and
+     follow the on screen instructions. here is a short
+     overview of what service each option provides!
+     
+   Available options are:  
+        1. Recon
+          ( Run OS and port Scans on required targets data
+            is stored in the frame works data base )
+        2. Analyse
+           ( Analyze and handle Data ) 
+        3. MITM
+           ( Carry out various MITM techniques
+             for more info select 3 and then
+             help from the menu )
+        4. WIFI PWN
+           ( this Option starts Wifite a network
+             cracking tool )
+        5. RogueWatch
+           ( this option will run a suit of tasks silently
+             in the background and report it to a remote client
+             via MQTT WARNING: this is definitley an illegal
+             activity be creative but also aware! :-) )
+        6. Remote Shells
+           ( opens a remote shell connection i.e
+             ssh,telnet,remote router,netcat)
+        7. Brute Connect
+           ( Attempts to crack passwords for remote ports i.e
+             ssh,telnet,remote router,netcat and much more
+             to come in the future )
+        8. Exit
+           ( exit this script )
+        9. Help
+           ( display this message )
+   

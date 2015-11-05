@@ -1,0 +1,5 @@
+1446334086|192.168.1.17|62078/tcp open  iphone-sync|OS_scans/Sat_31_Oct_23:28:06_UTC_2015/192.168.1.17.txt|home
+1446334086|192.168.1.111|22/tcp   open  ssh|OS_scans/Sat_31_Oct_23:28:06_UTC_2015/192.168.1.111.txt|home
+1446334086|192.168.1.111|5900/tcp open  vnc|OS_scans/Sat_31_Oct_23:28:06_UTC_2015/192.168.1.111.txt|home
+1446334086|192.168.1.111|6000/tcp open  X11|OS_scans/Sat_31_Oct_23:28:06_UTC_2015/192.168.1.111.txt|home
+1446334086|192.168.1.1|80/tcp open  http|OS_scans/Sat_31_Oct_23:28:06_UTC_2015/192.168.1.1.txt|home
