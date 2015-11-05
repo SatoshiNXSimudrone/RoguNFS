@@ -1,7 +1,10 @@
 var fs = require('fs');
- var publicInterface ="";
- PIP = new Array();
+var publicInterface ="";
+PIP = new Array();
 SN= new Array();
+var port="";
+var ctr=0;
+var dup=0;
 var firstPart='<!DOCTYPE html>'+
   '<html>'+
     '<head>'+
@@ -111,6 +114,19 @@ fs.readdir(path, function(err, items) {
           contents2 = fs.readFileSync('../JSON/subnets/'+jsonContent1.GateWatch[index].name+"_abyss.json");
           jsonContent2 = JSON.parse(contents2);
           var n2= jsonContent2.abyss.length;
+          var a;
+          var b;
+          for(b=0;b<n2;b++){
+            for (a=1;a<n2;a++){
+                 if(jsonContent2.abyss[b].ip == jsonContent2.abyss[a].ip)
+                  dup = dup+1;
+                console.log("FUCKING HELL "+ dup)
+                console.log(jsonContent2.abyss[b].ip +"  "+ jsonContent2.abyss[a].ip)
+
+            }
+          }
+
+          }
           var index2;
           for(index2=0;index2<n2;index2++){
             console.log("subnets are build "+ index2);
@@ -140,28 +156,33 @@ fs.readdir(path, function(err, items) {
                         '</ul>';
            }
            else{
-              SN[index2] = new Array( jsonContent2.abyss[index2].name,jsonContent2.abyss[index2].stamp,jsonContent2.abyss[index2].ip,jsonContent2.abyss[index2].port,jsonContent2.abyss[index2].os);
-               console.log("ARRAY block is being  build "+ index2);
-               console.log(SN[0],SN[1],SN[2],SN[3],SN[4]);
-              if(jsonContent2.abyss[index2 -1].ip == jsonContent2.abyss[index2].ip){
-                  SN[index2][3]+="\n"+jsonContent2.abyss[index].port;
-                   console.log("building ports "+ SN[index2][3]);
-                  console.log("I should DEFINITLY be in here!!!!!!!!!!!!!!!!!!!!!!!");
-              }
-
-
-           }
-
+              console.log(jsonContent2.abyss[index2 -1].ip+" "+ jsonContent2.abyss[index2].ip);
+                 if(jsonContent2.abyss[index2 -1].ip == jsonContent2.abyss[index2].ip){
+                   ctr=ctr+1;
+                   port+="\n"+jsonContent2.abyss[index2].port;
+                   console.log(port);
+                   var tmp =[jsonContent2.abyss[index2].name,jsonContent2.abyss[index2].stamp,jsonContent2.abyss[index2].ip,"",jsonContent2.abyss[index2].os];
+                   console.log("I should DEFINITLY be in here!!!!!!!!!!!!!!!!!!!!!!!");
+                   tmp[3]=port;
+                   continue;
+                }
+                else{
+                  port="";
+                  if(ctr==dup)
+                      SN[index2-1]=tmp;
+                  ctr=0;
+                  SN[index2]=new Array( jsonContent2.abyss[index2].name,jsonContent2.abyss[index2].stamp,jsonContent2.abyss[index2].ip,jsonContent2.abyss[index2].port,jsonContent2.abyss[index2].os);
+        
+                }
+          }
         }
-
       }
           
     }
-  }
   console.log("RETURN TO SENDER HELP!!!!!!!!!!!!!!!!!!!!!!!!!!!"+PIP.length +" " +SN.length);
   var row;
   var col;
-   console.log(PIP.length);
+  console.log(PIP.length);
 
   if(PIP.length>0){
       for (row=1;row<PIP.length+1;row++){
