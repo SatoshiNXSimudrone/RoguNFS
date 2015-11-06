@@ -1,57 +1,5 @@
 var fs = require('fs');
- var publicInterface ="";
-
-var firstPart='<!DOCTYPE html>'+
-  '<html>'+
-    '<head>'+
-      '<!--Import Google Icon Font-->'+
-      '<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">'+
-      '<!-- Compiled and minified CSS -->'+
-      '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">'+
-      '<meta name="viewport" content="width=device-width, initial-scale=1.0"/>'+
-      '<style>'+
-            '#Scontainer {'+
-                  'height: 450px;'+
-                  'width: 360px;'+
-                  'overflow: auto;'+
-                'background-color: black;'+
-            '}'+
-            'body {'+
-              'background-color:black;'+
-            '}'+
-      '</style>'+
-    '</head>'+
-    '<body>'+
-      '<!--Import jQuery before materialize.js-->'+
-      '<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>'+
-      '<!-- Compiled and minified JavaScript -->'+
-      '<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>'+   
-      '<script type="text/javascript" src="script.js"></script>'+
-      '<!--Let browser know website is optimized for mobile-->'+
- 
-      '<header class="page-header teal lighten-2">'+
-          '<div class="container">'+
-            '<div class="row">'+
-              '<div class="col l6 s12">'+
-                '<h5 class="grey-text text-lighten-4"><i class="material-icons">visibility</i>content.</h5>'+
-              '</div>'+
-            '</div>'+
-          '</div>'+
-        '</header>'+
-        '<div id="Scontainer">';
-
-var lastPart='</div>'+
-          '<footer class="page-footer teal lighten-2">'+
-          '<div class="footer-copyright">'+
-            '<div class="container">'+
-            '© 2014 Copyright Text'+
-            '<a class="grey-text text-lighten-4 right" href="#!">More Links</a>'+
-            '</div>'+
-          '</div>'+
-        '</footer>'+
-    '</body>'+
-  '</html>';
-
+var publicInterface ="";
 var set=0;
 var obj1;
 var obj2;
@@ -59,11 +7,9 @@ if (process.argv.length <= 2) {
     console.log("Usage: " + __filename + " path/to/directory");
     process.exit(-1);
 }
- 
 var path = process.argv[2];
- 
 fs.readdir(path, function(err, items) {
-    /* content here */
+/* content here */
 // Define JSON File
 // Get content from file
 var contents1;
@@ -72,78 +18,62 @@ var jsonContent1;
 var jsonContent2;
 var x;
 // public Ips
+for (x=0;x<items.length;x++){
+   if(items[x].indexOf(".json") > -1 ){
+    console.log(items[x]);
+    contents1 = fs.readFileSync('../JSON/'+items[x]);
+    jsonContent1 = JSON.parse(contents1);
+    var current = null;
+    var cnt = 0;
+    var rows=0;
+    console.log(jsonContent1.length);
+    for (var i = 0; i < jsonContent1.GateWatch.length; i++) {
+      console.log("Debug test");
+        if ( jsonContent1.GateWatch[i].public_ip!= current) {
+            if (cnt > 0) {
+                console.log(current + ' comes --> ' + cnt + ' times<br>');
+                console.log(rows2 + ' comes --> ' + cnt2 + ' times');
+            }
+            current = jsonContent1.GateWatch[i].public_ip;
+            rows =i;
+            cnt = 1;
+        } else {
+            cnt++;
+        }
+    }
+    if (cnt > 0) {
+        console.log(current + ' comes --> ' + cnt + ' times');
+    }
 
 
-for (x=0;x<items.length-1;x++){
-   contents1 = fs.readFileSync('../JSON/'+items[x]);
-   jsonContent1 = JSON.parse(contents1);
-   
 
-  publicInterface+='<ul class="collapsible popout" data-collapsible="accordion">'+
-             '<li>'+
-              '<div class="collapsible-header pink darken-3"><i class="material-icons">perm_identity</i>Name</div>'+
-              '<div class="collapsible-body grey-text text-lighten-4"><p>'+jsonContent1.GateWatch[x].name+'</p></div>'+
-            '</li>'+
-            '<li>'+
-              '<div class="collapsible-header pink darken-3"><i class="material-icons">query_builder</i>First</div>'+
-              '<div class="collapsible-body grey-text text-lighten-4"><p>'+jsonContent1.GateWatch[x].stamp+'</p></div>'+
-            '</li>'+
-            '<li>'+
-              '<div class="collapsible-header pink darken-3"><i class="material-icons">settings_input_antenna</i>First</div>'+
-              '<div class="collapsible-body grey-text text-lighten-4"><p>'+jsonContent1.GateWatch[x].public_ip+'</p></div>'+
-            '</li>'+
-            '<li>'+
-              '<div class="collapsible-header pink darken-3"><i class="material-icons">settings_input_component</i>input</div>'+
-              '<div class="collapsible-body grey-text text-lighten-4"><p>'+jsonContent1.GateWatch[x].port+'</p></div>'+
-            '</li>'+
-            '<li>'+
-              '<div class="collapsible-header pink darken-3"><i class="material-icons">info_outline</i>Third</div>'+
-              '<div class="collapsible-body grey-text text-lighten-4"><p>'+jsonContent1.GateWatch[x].os+'</p></div>'+
-            '</li>'+
-            '<li>'+
-              '<div class="collapsible-header pink darken-3"><i class="material-icons">info_outline</i>Subnets</div>'+
-              '<div class="collapsible-body grey-text text-lighten-4">';
-   console.log(publicInterface);    
-
-        
    contents2 = fs.readFileSync('../JSON/subnets/'+jsonContent1.GateWatch[x].name+"_abyss.json");
    jsonContent2 = JSON.parse(contents2);
-   var len = jsonContent2.abyss.length;
 
  // subnet 
-	for(i=0;i<len;i++){
-
-		publicInterface+='<ul class="collapsible popout" data-collapsible="accordion" >'+
-                     '<li>'+
-                      '<div class="collapsible-header  blue-grey darken-3"><i class="material-icons">perm_identity</i>name</div>'+
-                      '<div class="collapsible-body"><p>'+jsonContent2.abyss[i].name+'</p></div>'+
-                    '</li>'+
-                    '<li>'+
-                      '<div class="collapsible-header  blue-grey darken-3"><i class="material-icons">query_builder</i>First</div>'+
-                      '<div class="collapsible-body"><p>'+jsonContent2.abyss[i].stamp+'</p></div>'+
-                    '</li>'+
-                    '<li>'+
-                      '<div class="collapsible-header  blue-grey darken-3"><i class="material-icons">settings_input_antenna</i>First</div>'+
-                      '<div class="collapsible-body"><p>'+jsonContent2.abyss[i].ip+'</p></div>'+
-                    '</li>'+
-                    '<li>'+
-                      '<div class="collapsible-header  blue-grey darken-3"><i class="material-icons">settings_input_component</i>input</div>'+
-                      '<div class="collapsible-body"><p>'+jsonContent2.abyss[i].port+'</p></div>'+
-                    '</li>'+
-                    '<li>'+
-                      '<div class="collapsible-header  blue-grey darken-3"><i class="material-icons">info_outline</i>Third</div>'+
-                      '<div class="collapsible-body"><p>'+jsonContent2.abyss[i].name+'</p></div>'+
-                    '</li>'+
-                '</ul>';
-     
-
-	}
-
-
+  var current2 = null;
+  var cnt2 = 0;
+  var rows2=0;
+	 for (var j = 0; j < jsonContent2.abyss.length; j++) {
+        if ( jsonContent2.abyss[j].ip!= current2) {
+            if (cnt2 > 0) {
+                console.log(current2 + ' comes --> ' + cnt2 + ' times');
+                console.log(rows2 + ' comes --> ' + cnt2 + ' times');
+            }
+            current2 = jsonContent2.abyss[j].ip;
+            cnt2 = 1;
+            rows2=j;
+        } else {
+            cnt2++;
+        }
+    }
+    if (cnt2 > 0) {
+        console.log(current2 + ' comes --> ' + cnt2 + ' times');
+    }
 }
 
-
-setPage();
+}
+//setPage();
 });
 
 function setPage(){
@@ -163,3 +93,56 @@ function setPage(){
 	    });
 	});
 }
+
+/*
+
+publicInterface+='<ul class="collapsible popout" data-collapsible="accordion">'+
+   '<li>'+
+     '<div class="collapsible-header pink darken-3"><i class="material-icons">perm_identity</i>Name</div>'+
+     '<div class="collapsible-body grey-text text-lighten-4"><p>'+jsonContent1.GateWatch[x].name+'</p></div>'+
+     '</li>'+
+    '<li>'+
+      '<div class="collapsible-header pink darken-3"><i class="material-icons">query_builder</i>First</div>'+
+      '<div class="collapsible-body grey-text text-lighten-4"><p>'+jsonContent1.GateWatch[x].stamp+'</p></div>'+
+    '</li>'+
+    '<li>'+
+      '<div class="collapsible-header pink darken-3"><i class="material-icons">settings_input_antenna</i>First</div>'+
+      '<div class="collapsible-body grey-text text-lighten-4"><p>'+jsonContent1.GateWatch[x].public_ip+'</p></div>'+
+    '</li>'+
+    '<li>'+
+      '<div class="collapsible-header pink darken-3"><i class="material-icons">settings_input_component</i>input</div>'+
+      '<div class="collapsible-body grey-text text-lighten-4"><p>'+jsonContent1.GateWatch[x].port+'</p></div>'+
+    '</li>'+
+    '<li>'+
+      '<div class="collapsible-header pink darken-3"><i class="material-icons">info_outline</i>Third</div>'+
+      '<div class="collapsible-body grey-text text-lighten-4"><p>'+jsonContent1.GateWatch[x].os+'</p></div>'+
+    '</li>'+
+    '<li>'+
+      '<div class="collapsible-header pink darken-3"><i class="material-icons">info_outline</i>Subnets</div>'+
+      '<div class="collapsible-body grey-text text-lighten-4">';
+   console.log(publicInterface);    
+
+publicInterface+='<ul class="collapsible popout" data-collapsible="accordion" >'+
+      '<li>'+
+        '<div class="collapsible-header  blue-grey darken-3"><i class="material-icons">perm_identity</i>name</div>'+
+        '<div class="collapsible-body"><p>'+jsonContent2.abyss[i].name+'</p></div>'+
+      '</li>'+
+      '<li>'+
+        '<div class="collapsible-header  blue-grey darken-3"><i class="material-icons">query_builder</i>First</div>'+
+        '<div class="collapsible-body"><p>'+jsonContent2.abyss[i].stamp+'</p></div>'+
+      '</li>'+
+      '<li>'+
+        '<div class="collapsible-header  blue-grey darken-3"><i class="material-icons">settings_input_antenna</i>First</div>'+
+        '<div class="collapsible-body"><p>'+jsonContent2.abyss[i].ip+'</p></div>'+
+      '</li>'+
+      '<li>'+
+        '<div class="collapsible-header  blue-grey darken-3"><i class="material-icons">settings_input_component</i>input</div>'+
+        '<div class="collapsible-body"><p>'+jsonContent2.abyss[i].port+'</p></div>'+
+      '</li>'+
+      '<li>'+
+        '<div class="collapsible-header  blue-grey darken-3"><i class="material-icons">info_outline</i>Third</div>'+
+        '<div class="collapsible-body"><p>'+jsonContent2.abyss[i].name+'</p></div>'+
+      '</li>'+
+  '</ul>';
+
+*/
